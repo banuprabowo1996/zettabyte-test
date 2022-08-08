@@ -9,7 +9,11 @@ function result(data) {
         data[key] *= 3.;
     });
 
-    return data
+    const sortable = Object.fromEntries(
+        Object.entries(data).sort(([, a], [, b]) => a - b)
+    );
+
+    return sortable
 }
 
 console.log(result(data));

@@ -24,29 +24,31 @@ const students = [
 ];
 const groups = 3;
 
-function result(students, groups) {
-    let str = students.map(el => el.firstName).sort()
-    let result = []
-    for (let i = 0; i < str.length; i++) {
-        let perStr = str[i]
-        let tmp = []
-        for (let j = 0; j < students.length; j++) {
-            let perStudent = students[j]
-            // console.log(perStr);
-            // console.log(perStudent);
-            if (perStudent.firstName === perStr) {
-                tmp.push(perStudent)
-            } else {
-                j++
-            }
-        }
-        console.log(tmp);
-        let numberOfEachGroup = Math.ceil(students.length / groups)
-        if (tmp.length === numberOfEachGroup) {
-            result.push(tmp)
-            tmp = []
-        }
+function compare(a, b) {
+    if (a.firstName < b.firstName) {
+        return -1;
     }
+    if (a.firstName > b.firstName) {
+        return 1;
+    }
+    return 0;
+}
+
+function result(students, groups) {
+    let sorted = students.sort(compare);
+    let perChunk = Math.ceil(students.length / groups)
+
+    const result = sorted.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index / perChunk)
+
+        if (!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [] // start a new chunk
+        }
+
+        resultArray[chunkIndex].push(item)
+
+        return resultArray
+    }, [])
     return result
 }
 
