@@ -69,7 +69,7 @@ class ArticleModel {
             if (query.title) {
                 console.log(query.title, '<<<<<< search');
                 const article = this.articles()
-                const search = await article.find({ 'name': { '$regex': `${query.title}`, '$options': 'i' } }).toArray()
+                const search = await article.find({ 'title': { '$regex': `${query.title}`, '$options': 'i' } }).toArray()
                 return search
             }
 
